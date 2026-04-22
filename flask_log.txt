@@ -1,0 +1,122 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:31:20] "POST /predict-temperature HTTP/1.1" 200 -
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:31:31] "POST /predict-rain HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:31:36] "POST /predict-rain HTTP/1.1" 400 -
+127.0.0.1 - - [19/Apr/2026 16:31:42] "POST /predict-temperature HTTP/1.1" 400 -
+127.0.0.1 - - [19/Apr/2026 16:33:35] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:33:36] "GET /static/plots/outliers_before_after.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:33:36] "GET /static/plots/heatmap.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:33:36] "GET /static/plots/histogram_temperature.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:33:36] "GET /static/plots/scatter_humidity_temp.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:33:36] "GET /static/plots/boxplot.png HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:33:37] "GET /static/plots/model_comparison.png HTTP/1.1" 200 -
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:37:56] "POST /predict-temperature HTTP/1.1" 200 -
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:37:57] "POST /predict-rain HTTP/1.1" 200 -
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:38:13] "POST /predict-temperature HTTP/1.1" 200 -
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:38:15] "POST /predict-rain HTTP/1.1" 200 -
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+C:\Users\yadav\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py:2691: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names
+  warnings.warn(
+127.0.0.1 - - [19/Apr/2026 16:38:56] "POST /predict-temperature HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:42:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 16:42:10] "GET /static/plots/heatmap.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 16:42:10] "GET /static/plots/outliers_before_after.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 16:42:10] "GET /static/plots/boxplot.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 16:42:10] "GET /static/plots/scatter_humidity_temp.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 16:42:10] "GET /static/plots/histogram_temperature.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 16:42:10] "GET /static/plots/model_comparison.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 16:42:19] "GET /health HTTP/1.1" 404 -
+127.0.0.1 - - [19/Apr/2026 16:42:19] "GET /model-comparison HTTP/1.1" 404 -
+127.0.0.1 - - [19/Apr/2026 16:49:27] "OPTIONS /predict HTTP/1.1" 404 -
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\joblib\\__init__.py', reloading
+Exception in thread Thread-2 (serve_forever):
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\httpcore\\_backends\\mock.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pydantic\\types.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\urllib3\\poolmanager.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+127.0.0.1 - - [19/Apr/2026 18:16:18] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [19/Apr/2026 18:53:22] "GET /health HTTP/1.1" 404 -
+127.0.0.1 - - [19/Apr/2026 18:53:22] "GET /model-comparison HTTP/1.1" 404 -
+127.0.0.1 - - [19/Apr/2026 18:53:45] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [19/Apr/2026 18:53:47] "GET /static/plots/boxplot.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 18:53:47] "GET /static/plots/model_comparison.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 18:53:47] "GET /static/plots/heatmap.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 18:53:47] "GET /static/plots/histogram_temperature.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 18:53:47] "GET /static/plots/scatter_humidity_temp.png HTTP/1.1" 304 -
+127.0.0.1 - - [19/Apr/2026 18:53:47] "GET /static/plots/outliers_before_after.png HTTP/1.1" 304 -
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\sklearn\\utils\\validation.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+127.0.0.1 - - [19/Apr/2026 19:17:03] "GET /health HTTP/1.1" 404 -
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\sklearn\\utils\\validation.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\sklearn\\utils\\validation.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\sklearn\\utils\\validation.py', reloading
+Exception in thread Thread-2 (serve_forever):
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\IPython\\display.py', reloading
+Exception in thread Thread-2 (serve_forever):
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600
+ * Detected change in 'C:\\Users\\yadav\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\cp1252.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 107-659-600

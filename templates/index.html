@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Prediction System</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      color: #e0e0e0;
+      padding: 20px;
+    }
+
+    header { text-align: center; padding: 30px 20px 20px; }
+    header h1 { font-size: 2.4rem; color: #64d2ff; letter-spacing: 1px; }
+
+    .container { max-width: 960px; margin: 0 auto; }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+    }
+    .card h2 { font-size: 1.1rem; color: #64d2ff; margin-bottom: 20px; }
+
+    /* Form Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      color: #a0c4d8;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.92rem;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus { outline: none; border-color: #64d2ff; }
+    .form-group select option { background: #1a2a3a; }
+
+    /* Algorithm selector row */
+    .algo-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .algo-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .algo-box label {
+      font-size: 0.78rem;
+      color: #a0c4d8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .algo-box select {
+      width: 100%;
+      padding: 9px 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(100,210,255,0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.92rem;
+    }
+    .algo-box select option { background: #1a2a3a; }
+
+    /* Buttons */
+    .btn-row { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+    .btn {
+      flex: 1; min-width: 180px;
+      padding: 12px 20px;
+      border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn:hover  { opacity: 0.88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-temp   { background: linear-gradient(135deg, #f7971e, #ffd200); color: #1a1a1a; }
+    .btn-rain   { background: linear-gradient(135deg, #1a6dff, #00cfff); color: #fff; }
+    .btn-compare{ background: linear-gradient(135deg, #7f00ff, #e100ff); color: #fff; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Result Box */
+    .result-box {
+      margin-top: 20px; padding: 18px 22px;
+      border-radius: 12px; display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .result-box.show { display: block; }
+    .result-temp  { background: rgba(247,151,30,0.15);  border: 1px solid rgba(247,151,30,0.4); }
+    .result-rain  { background: rgba(0,207,255,0.12);   border: 1px solid rgba(0,207,255,0.35); }
+    .result-error { background: rgba(255,80,80,0.12);   border: 1px solid rgba(255,80,80,0.4); }
+
+    .result-box .rlabel { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #a0c4d8; margin-bottom: 6px; }
+    .result-box .rvalue { font-size: 2rem; font-weight: 700; color: #fff; }
+    .result-box .rsub   { font-size: 0.85rem; color: #a0c4d8; margin-top: 5px; }
+    .result-box .ralgo  { font-size: 0.8rem; color: #64d2ff; margin-top: 4px; }
+
+    /* Probability Bar */
+    .prob-bar-wrap { margin-top: 12px; }
+    .prob-label { font-size: 0.82rem; color: #a0c4d8; margin-bottom: 4px; }
+    .prob-bar { height: 10px; border-radius: 5px; background: rgba(255,255,255,0.1); overflow: hidden; margin-bottom: 8px; }
+    .prob-fill { height: 100%; border-radius: 5px; transition: width 0.6s ease; }
+    .fill-rain   { background: linear-gradient(90deg, #1a6dff, #00cfff); }
+    .fill-norain { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+
+    /* Comparison Table */
+    .compare-section { display: none; animation: fadeIn 0.3s ease; }
+    .compare-section.show { display: block; }
+    .compare-section h2 { font-size: 1.1rem; color: #64d2ff; margin-bottom: 16px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+    }
+    thead tr { background: rgba(100,210,255,0.1); }
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      color: #64d2ff;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #e0e0e0;
+    }
+    tr.best-row td { color: #ffd200; font-weight: 600; }
+    tr.best-row td:first-child::after { content: ' ★'; color: #ffd200; }
+    tbody tr:hover { background: rgba(255,255,255,0.04); }
+
+    /* Bar chart inside table */
+    .bar-cell { display: flex; align-items: center; gap: 8px; }
+    .mini-bar { height: 8px; border-radius: 4px; min-width: 4px; transition: width 0.5s ease; }
+    .bar-temp   { background: linear-gradient(90deg, #f7971e, #ffd200); }
+    .bar-rain   { background: linear-gradient(90deg, #1a6dff, #00cfff); }
+    .bar-norain { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+
+    /* Spinner */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .loading .spinner { display: inline-block; }
+    .loading .btn-text { display: none; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @keyframes spin    { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>🌤 Weather Prediction System</h1>
+  </header>
+
+  <!-- Input Card -->
+  <div class="card">
+    <h2>📋 Weather Input Parameters</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Min Temperature (°C)</label>
+        <input type="number" id="min_temp" value="12" step="0.1" placeholder="-10 to 50"/>
+      </div>
+      <div class="form-group">
+        <label>Max Temperature (°C)</label>
+        <input type="number" id="max_temp" value="26" step="0.1" placeholder="-10 to 60"/>
+      </div>
+      <div class="form-group">
+        <label>Humidity (%)</label>
+        <input type="number" id="humidity" value="65" step="1" placeholder="0 to 100"/>
+      </div>
+      <div class="form-group">
+        <label>Wind Speed (km/h)</label>
+        <input type="number" id="wind_speed" value="20" step="0.1" placeholder="0 to 150"/>
+      </div>
+      <div class="form-group">
+        <label>Pressure (hPa)</label>
+        <input type="number" id="pressure" value="1015" step="0.1" placeholder="950 to 1060"/>
+      </div>
+      <div class="form-group">
+        <label>Sunshine (hours)</label>
+        <input type="number" id="sunshine" value="7" step="0.1" placeholder="0 to 14"/>
+      </div>
+      <div class="form-group">
+        <label>Cloud Cover (0–8)</label>
+        <input type="number" id="cloud" value="3" step="1" min="0" max="8"/>
+      </div>
+      <div class="form-group">
+        <label>Wind Direction</label>
+        <select id="wind_dir">
+          <option>N</option><option>S</option><option>E</option><option>W</option>
+          <option>NE</option><option>NW</option><option>SE</option><option>SW</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Algorithm Selectors -->
+    <div class="algo-row">
+      <div class="algo-box">
+        <label>🌡 Temperature Algorithm</label>
+        <select id="temp_algo">
+          <option value="linear_regression">Linear Regression</option>
+          <option value="decision_tree">Decision Tree</option>
+          <option value="random_forest">Random Forest</option>
+        </select>
+      </div>
+      <div class="algo-box">
+        <label>🌧 Rain Algorithm</label>
+        <select id="rain_algo">
+          <option value="logistic_regression">Linear Regression</option>
+          <option value="decision_tree">Decision Tree</option>
+          <option value="random_forest">Random Forest</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <button class="btn btn-temp" id="btn-temp" onclick="predict('temperature')">
+        <span class="spinner"></span>
+        <span class="btn-text">🌡 Predict Temperature</span>
+      </button>
+      <button class="btn btn-rain" id="btn-rain" onclick="predict('rain')">
+        <span class="spinner"></span>
+        <span class="btn-text">🌧 Predict Rainfall</span>
+      </button>
+      <button class="btn btn-compare" id="btn-compare" onclick="compareAll()">
+        <span class="spinner"></span>
+        <span class="btn-text">⚖ Compare All</span>
+      </button>
+    </div>
+
+    <!-- Temperature Result -->
+    <div class="result-box result-temp" id="result-temp">
+      <div class="rlabel">Predicted Temperature</div>
+      <div class="rvalue" id="temp-value">--</div>
+      <div class="rsub"  id="temp-sub"></div>
+      <div class="ralgo" id="temp-algo-used"></div>
+    </div>
+
+    <!-- Rain Result -->
+    <div class="result-box result-rain" id="result-rain">
+      <div class="rlabel">Rain Tomorrow?</div>
+      <div class="rvalue" id="rain-value">--</div>
+      <div class="prob-bar-wrap" id="prob-bars"></div>
+      <div class="ralgo" id="rain-algo-used"></div>
+    </div>
+
+    <!-- Error -->
+    <div class="result-box result-error" id="result-error">
+      <div class="rlabel">⚠ Error</div>
+      <div class="rvalue" style="font-size:1rem;" id="error-msg">--</div>
+    </div>
+  </div>
+
+  <!-- Comparison Card -->
+  <div class="card compare-section" id="compare-section">
+    <h2>⚖ Algorithm Comparison</h2>
+
+    <p style="font-size:0.82rem; color:#a0c4d8; margin-bottom:14px;">
+      Temperature Prediction — all 3 regression models on the same input
+    </p>
+    <table id="temp-compare-table">
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Predicted Temp (°C)</th>
+          <th>Visual</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <p style="font-size:0.82rem; color:#a0c4d8; margin-bottom:14px; margin-top:8px;">
+      Rain Prediction — all 3 classification models on the same input
+    </p>
+    <table id="rain-compare-table">
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Prediction</th>
+          <th>Rain Probability</th>
+          <th>Visual</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  const BEST_TEMP = 'linear_regression';
+  const BEST_RAIN = 'logistic_regression';
+
+  const ALGO_LABELS = {
+    linear_regression:   'Linear Regression',
+    decision_tree:       'Decision Tree',
+    random_forest:       'Random Forest',
+    logistic_regression: 'Linear Regression',
+  };
+
+  function getFormData() {
+    return {
+      min_temp:  document.getElementById('min_temp').value,
+      max_temp:  document.getElementById('max_temp').value,
+      humidity:  document.getElementById('humidity').value,
+      wind_speed:document.getElementById('wind_speed').value,
+      pressure:  document.getElementById('pressure').value,
+      sunshine:  document.getElementById('sunshine').value,
+      cloud:     document.getElementById('cloud').value,
+      wind_dir:  document.getElementById('wind_dir').value,
+    };
+  }
+
+  function hideResults() {
+    ['result-temp','result-rain','result-error'].forEach(id =>
+      document.getElementById(id).classList.remove('show'));
+    document.getElementById('compare-section').classList.remove('show');
+  }
+
+  function setLoading(btnId, on) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = on;
+    btn.classList.toggle('loading', on);
+  }
+
+  async function predict(type) {
+    hideResults();
+    const isTemp = type === 'temperature';
+    const btnId    = isTemp ? 'btn-temp' : 'btn-rain';
+    const endpoint = isTemp ? '/predict-temperature' : '/predict-rain';
+    const algo     = document.getElementById(isTemp ? 'temp_algo' : 'rain_algo').value;
+
+    setLoading(btnId, true);
+    try {
+      const res  = await fetch(endpoint, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ ...getFormData(), algorithm: algo })
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) { showError(data.error || 'Unknown error'); return; }
+      isTemp ? showTempResult(data) : showRainResult(data);
+    } catch(e) {
+      showError('Network error: ' + e.message);
+    } finally {
+      setLoading(btnId, false);
+    }
+  }
+
+  async function compareAll() {
+    hideResults();
+    setLoading('btn-compare', true);
+    try {
+      const res  = await fetch('/compare', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(getFormData())
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) { showError(data.error || 'Unknown error'); return; }
+      renderComparison(data);
+    } catch(e) {
+      showError('Network error: ' + e.message);
+    } finally {
+      setLoading('btn-compare', false);
+    }
+  }
+
+  function showTempResult(data) {
+    const temp = data.predicted_temperature;
+    document.getElementById('temp-value').textContent = temp + ' °C';
+    const feel = temp < 10 ? '🥶 Cold' : temp < 20 ? '😊 Cool' : temp < 30 ? '☀ Warm' : '🔥 Hot';
+    document.getElementById('temp-sub').textContent = 'Feels like: ' + feel;
+    document.getElementById('temp-algo-used').textContent = 'Algorithm: ' + ALGO_LABELS[data.algorithm];
+    document.getElementById('result-temp').classList.add('show');
+  }
+
+  function showRainResult(data) {
+    const isRain = data.rain_tomorrow === 'Yes';
+    document.getElementById('rain-value').textContent = isRain ? '🌧 Yes — Rain Expected' : '☀ No — Clear Day';
+    const p = data.probability;
+    document.getElementById('prob-bars').innerHTML = `
+      <div class="prob-label">Rain: ${p.rain}%</div>
+      <div class="prob-bar"><div class="prob-fill fill-rain" style="width:${p.rain}%"></div></div>
+      <div class="prob-label">No Rain: ${p.no_rain}%</div>
+      <div class="prob-bar"><div class="prob-fill fill-norain" style="width:${p.no_rain}%"></div></div>`;
+    document.getElementById('rain-algo-used').textContent = 'Algorithm: ' + ALGO_LABELS[data.algorithm];
+    document.getElementById('result-rain').classList.add('show');
+  }
+
+  function showError(msg) {
+    document.getElementById('error-msg').textContent = msg;
+    document.getElementById('result-error').classList.add('show');
+  }
+
+  function renderComparison(data) {
+    // Temperature comparison table
+    const tempData = data.temperature_comparison;
+    const temps    = Object.values(tempData);
+    const maxTemp  = Math.max(...temps);
+    const minTemp  = Math.min(...temps);
+    const tempRange = maxTemp - minTemp || 1;
+
+    const tempBody = document.querySelector('#temp-compare-table tbody');
+    tempBody.innerHTML = '';
+    const tempEntries = Object.entries(tempData).sort(([a], [b]) => (a === BEST_TEMP ? -1 : b === BEST_TEMP ? 1 : 0));
+    tempEntries.forEach(([algo, val]) => {
+      const isBest = algo === BEST_TEMP;
+      const barW   = Math.round(((val - minTemp) / tempRange) * 120 + 30);
+      const tr = document.createElement('tr');
+      if (isBest) tr.classList.add('best-row');
+      tr.innerHTML = `
+        <td>${ALGO_LABELS[algo] || algo}</td>
+        <td>${val} °C</td>
+        <td><div class="bar-cell">
+          <div class="mini-bar bar-temp" style="width:${barW}px"></div>
+          <span style="font-size:0.78rem;color:#a0c4d8">${val}</span>
+        </div></td>`;
+      tempBody.appendChild(tr);
+    });
+
+    // Rain comparison table
+    const rainData = data.rain_comparison;
+    const rainBody = document.querySelector('#rain-compare-table tbody');
+    rainBody.innerHTML = '';
+    const rainEntries = Object.entries(rainData).sort(([a], [b]) => (a === BEST_RAIN ? -1 : b === BEST_RAIN ? 1 : 0));
+    rainEntries.forEach(([algo, val]) => {
+      const isBest = algo === BEST_RAIN;
+      const barW = Math.round(val.rain_prob);
+      const color = val.rain_tomorrow === 'Yes' ? '#1a6dff' : '#43e97b';
+      const tr = document.createElement('tr');
+      if (isBest) tr.classList.add('best-row');
+      tr.innerHTML = `
+        <td>${ALGO_LABELS[algo] || algo}</td>
+        <td style="color:${val.rain_tomorrow === 'Yes' ? '#64d2ff' : '#43e97b'};font-weight:600">
+          ${val.rain_tomorrow === 'Yes' ? '🌧 Yes' : '☀ No'}
+        </td>
+        <td>${val.rain_prob}%</td>
+        <td><div class="bar-cell">
+          <div class="mini-bar" style="width:${barW}px;background:${color};border-radius:4px;height:8px"></div>
+          <span style="font-size:0.78rem;color:#a0c4d8">${val.rain_prob}%</span>
+        </div></td>`;
+      rainBody.appendChild(tr);
+    });
+
+    document.getElementById('compare-section').classList.add('show');
+  }
+</script>
+</body>
+</html>
